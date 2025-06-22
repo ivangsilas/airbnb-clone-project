@@ -80,4 +80,122 @@ An advanced open-source relational database used for storing and managing struct
 ### GraphQL
 A query language for APIs that allows clients to request exactly the data they need, improving efficiency and flexibility compared to traditional REST.
 
-### (Add more technologies below as needed)
+
+## Database Design
+
+### Entities and Fields
+
+#### Users
+- `id`: Unique identifier for each user
+- `name`: Full name of the user
+- `email`: Email address (unique)
+- `password_hash`: Encrypted user password
+- `created_at`: Account creation timestamp
+
+#### Properties
+- `id`: Unique identifier for each property
+- `owner_id`: Reference to the User who owns the property
+- `title`: Property name or title
+- `description`: Detailed property description
+- `location`: Physical address or coordinates
+
+#### Bookings
+- `id`: Unique identifier for each booking
+- `user_id`: Reference to the User who made the booking
+- `property_id`: Reference to the booked Property
+- `start_date`: Check-in date
+- `end_date`: Check-out date
+- `status`: Booking status (confirmed, canceled, pending)
+
+#### Reviews
+- `id`: Unique identifier for each review
+- `user_id`: Reference to the User who wrote the review
+- `property_id`: Reference to the reviewed Property
+- `rating`: Numerical rating (e.g., 1-5)
+- `comment`: Text of the review
+- `created_at`: Timestamp of when the review was posted
+
+#### Payments
+- `id`: Unique identifier for each payment
+- `user_id`: Reference to the User who made the payment
+- `booking_id`: Reference to the Booking associated with the payment
+- `amount`: Payment amount
+- `status`: Payment status (completed, failed, pending)
+- `payment_date`: Timestamp of when the payment was processed
+
+### Entity Relationships
+
+- A **User** can own multiple **Properties**.
+- A **User** can make multiple **Bookings**.
+- Each **Booking** is associated with one **Property** and one **User**.
+- A **User** can leave multiple **Reviews** for different **Properties**.
+- Each **Property** can have multiple **Reviews**.
+- Each **Booking** can have one associated **Payment**.
+
+
+
+## Feature Breakdown
+
+### User Management
+Allows users to register, log in, and manage their accounts. Users can update personal details and securely authenticate to access other features of the platform.
+
+### Property Management
+Enables property owners to list, update, and manage their properties. Owners can add photos, descriptions, pricing, and availability, making properties visible to potential guests.
+
+### Booking System
+Allows users to browse available properties, select dates, and make bookings. The system manages booking confirmations, cancellations, and availability updates to prevent double-booking.
+
+### Review System
+Enables users to leave reviews and ratings for properties they have booked. Reviews contribute to building trust and transparency within the community.
+
+### Payment Processing
+Handles secure payment transactions for property bookings. Integrates with payment gateways to ensure smooth processing of payments, refunds, and transaction histories.
+
+### Search and Filtering
+Provides users with tools to search for properties by location, date, price range, and amenities. Improves the user experience by helping users find properties that match their preferences.
+
+
+## API Security
+
+### Authentication
+Ensures that only verified users can access the platform by implementing secure login mechanisms (such as JWT tokens or OAuth). This protects user accounts and prevents unauthorized access to private data.
+
+### Authorization
+Controls what authenticated users are allowed to do within the system. It ensures that users can only perform actions or access resources that they have permissions for, helping prevent privilege escalation and data leakage.
+
+### Rate Limiting
+Implements controls to limit the number of API requests a user or client can make in a given timeframe. This helps protect against abuse, brute-force attacks, and denial-of-service (DoS) attempts.
+
+### Data Encryption
+Encrypts sensitive data both in transit (via HTTPS) and at rest. This protects user information, payment details, and other critical data from interception and unauthorized access.
+
+### Input Validation and Sanitization
+Ensures all incoming data is validated and sanitized to prevent injection attacks, such as SQL injection and cross-site scripting (XSS), enhancing the overall security of the API.
+
+### Importance of Security
+- **Protecting User Data**: Safeguards personal information and builds user trust.
+- **Securing Payments**: Ensures that financial transactions are processed securely, protecting both users and platform revenue.
+- **Maintaining Platform Integrity**: Prevents unauthorized access, data breaches, and malicious activity that could disrupt service and damage reputation.
+
+
+
+## CI/CD Pipeline
+
+### What is CI/CD?
+CI/CD stands for Continuous Integration and Continuous Deployment (or Delivery). It is a set of automated processes that allow code changes to be built, tested, and deployed quickly and reliably.  
+
+CI/CD pipelines help ensure that the codebase remains in a deployable state, reducing manual errors, speeding up releases, and promoting a more efficient and collaborative development process.
+
+### Why It’s Important for the Project
+- **Improves Code Quality**: Automated testing ensures that new code does not break existing functionality.
+- **Accelerates Delivery**: Speeds up the process of getting new features and fixes to users.
+- **Ensures Consistency**: Provides a repeatable and reliable process for building and deploying the application.
+- **Supports Team Collaboration**: Encourages frequent commits and integration, reducing integration issues.
+
+### Tools
+- **GitHub Actions**: Automates workflows for building, testing, and deploying the application directly from the GitHub repository.
+- **Docker**: Provides containerized environments for consistent development, testing, and production deployments.
+- **(Optional)**: Jenkins, CircleCI, GitLab CI/CD, AWS CodePipeline, depending on project needs.
+
+
+
